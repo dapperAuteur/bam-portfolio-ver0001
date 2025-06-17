@@ -1,8 +1,32 @@
 @import "tailwindcss";
+@tailwind utilities;
 
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--tw-page-background); /* Base background for the app */
+  color: var(--tw-page-text);             /* Base text color for the app */
+}
+
+/* We'll define custom CSS properties for our colors for easy global use */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --tw-primary-DEFAULT: #2563EB;
+  --tw-primary-light: #DBEAFE;   /* Aligned with tailwind.config.ts */
+  --tw-primary-dark: #1E40AF;
+  --tw-accent: #10B981;
+
+  /* Updated dark theme colors */
+  --tw-page-background: #181a1b;
+  --tw-page-text: #e8e6e3;
+
+  --tw-card-background: #51565c;
+  --tw-card-border: #3a3e40;
+  --tw-card-text: #dcd9d6;
+
+  --tw-secondaryText-DEFAULT: #a0a3a6; /* Updated secondary text color */
+
+  /* Variables for @theme inline and general use, aligned with the new dark theme */
+  --background: var(--tw-page-background);
+  --foreground: var(--tw-page-text);
 }
 
 @theme inline {
@@ -12,15 +36,11 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* If the theme is now always dark by default via Tailwind config and :root,
+   this media query specifically for --background and --foreground might be redundant.
+   It's kept here for now but can be removed if not needed for further overrides. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* You can add further dark-scheme specific overrides here if necessary */
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
