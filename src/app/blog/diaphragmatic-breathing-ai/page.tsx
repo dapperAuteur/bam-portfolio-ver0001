@@ -280,7 +280,7 @@ const DiaphragmaticBreathingInfographic = () => {
               The Power of Breath: A Guide to Diaphragmatic Breathing
             </h1>
             <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-              Unlock health, longevity, and vocal excellence by mastering your body's most fundamental rhythm.
+              Unlock health, longevity, and vocal excellence by mastering your body&apos;s most fundamental rhythm.
             </p>
           </header>
 
@@ -289,10 +289,10 @@ const DiaphragmaticBreathingInfographic = () => {
              <InfoCard>
               <h3 className="text-2xl font-bold text-blue-700 mb-3">More Than Just a Deep Breath</h3>
               <p className="text-gray-600 mb-4">
-                Often called "belly breathing," this is the practice of engaging your diaphragm, a large muscle at the base of your lungs designed to do ~80% of the work of breathing.
+                Often called &quot;belly breathing,&quot; this is the practice of engaging your diaphragm, a large muscle at the base of your lungs designed to do ~80% of the work of breathing.
               </p>
               <p className="text-gray-600">
-                It contrasts with shallow "chest breathing," which uses smaller neck and shoulder muscles, leading to tension and inefficiency. Learning this technique is about re-learning your body's natural, optimal way to breathe.
+                It contrasts with shallow &quot;chest breathing,&quot; which uses smaller neck and shoulder muscles, leading to tension and inefficiency. Learning this technique is about re-learning your body&apos;s natural, optimal way to breathe.
               </p>
             </InfoCard>
             <InfoCard>
@@ -395,7 +395,7 @@ const DiaphragmaticBreathingInfographic = () => {
           <SectionTitle>For Voiceover Artists & Speakers</SectionTitle>
           <div className="grid md:grid-cols-2 gap-8 items-center">
               <InfoCard>
-                  <h3 className="text-2xl font-bold text-blue-700 mb-3">Your Voice's Power Source</h3>
+                  <h3 className="text-2xl font-bold text-blue-700 mb-3">Your Voice&apos;s Power Source</h3>
                   <p className="text-gray-600 mb-4">For any vocal professional, the breath is the engine. Proper diaphragmatic support is the key to control, stamina, and long-term vocal health.</p>
                   <ul className="list-disc list-inside space-y-2 text-gray-700">
                       <li>Allows for longer, more complex sentences.</li>
