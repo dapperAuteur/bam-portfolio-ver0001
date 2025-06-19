@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from 'react';
+import { AppError } from '@/types/errors'; // Import the custom error interface
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, BarController, Title, Tooltip, Legend, RadialLinearScale, PointElement, LineElement, Filler, RadarController } from 'chart.js';
 
 // Register all necessary components for Chart.js
@@ -76,7 +77,7 @@ const DiaphragmaticBreathingInfographic = () => {
   const [modalContent, setModalContent] = useState('');
   const [isModalLoading, setIsModalLoading] = useState(false);
 
-  const [practiceGoals, setPracticeGoals] = useState([]);
+  const [practiceGoals, setPracticeGoals] = useState<string[]>([]);
   const [sessionDuration, setSessionDuration] = useState('10');
   const [generatedPlan, setGeneratedPlan] = useState('');
   const [isPlanLoading, setIsPlanLoading] = useState(false);
@@ -127,15 +128,17 @@ const DiaphragmaticBreathingInfographic = () => {
     try {
       const explanation = await callGeminiAPI(prompt);
       setModalContent(explanation);
-    } catch (error) {
-      setModalContent(`Sorry, we couldn't fetch more details at this time. Error: ${error.message}`);
+    } catch (error: AppError) { // Type the caught error as AppError
+      const errorMessage = error.message || "An unexpected error occurred."; // Access message directly
+      
+      setModalContent(`Sorry, we couldn't fetch more details at this time. Error: ${errorMessage}`);
     } finally {
       setIsModalLoading(false);
     }
   };
 
   // Handler for goal selection in the plan generator
-  const handleGoalChange = (event) => {
+  const handleGoalChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
     setPracticeGoals(prev => 
       checked ? [...prev, value] : prev.filter(goal => goal !== value)
@@ -157,7 +160,7 @@ const DiaphragmaticBreathingInfographic = () => {
     try {
       const plan = await callGeminiAPI(prompt);
       setGeneratedPlan(plan);
-    } catch (error) {
+    } catch (error: AppError) { // Type the caught error as AppError
       setPlanError(`Sorry, we couldn't generate your plan. Error: ${error.message}`);
     } finally {
       setIsPlanLoading(false);
@@ -170,7 +173,7 @@ const DiaphragmaticBreathingInfographic = () => {
     let voiceChartInstance = null;
 
     if (cardioChartRef.current) {
-      const cardioCtx = cardioChartRef.current.getContext('2d');
+      const cardioCtx = (cardioChartRef.current as HTMLCanvasElement).getContext('2d');
       cardioChartInstance = new ChartJS(cardioCtx, {
         type: 'bar',
         data: {
@@ -202,7 +205,7 @@ const DiaphragmaticBreathingInfographic = () => {
     }
 
     if (voiceChartRef.current) {
-      const voiceCtx = voiceChartRef.current.getContext('2d');
+      const voiceCtx = (voiceChartRef.current as HTMLCanvasElement).getContext('2d');
       voiceChartInstance = new ChartJS(voiceCtx, {
         type: 'radar',
         data: {
