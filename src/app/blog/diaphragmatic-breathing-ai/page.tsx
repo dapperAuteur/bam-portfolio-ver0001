@@ -20,18 +20,18 @@ ChartJS.register(
 );
 
 // Reusable components for styling sections
-const SectionTitle = ({ children }) => (
+const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">{children}</h2>
 );
 
-const InfoCard = ({ children, className = '' }) => (
+const InfoCard = ({ children, className = '' }: { children: React.ReactNode, className?: string }) => (
   <div className={`bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 ${className}`}>
     {children}
   </div>
 );
 
 // Benefit card now includes a button to trigger the Gemini explanation
-const BenefitCard = ({ icon, title, text, onExplain }) => (
+const BenefitCard = ({ icon, title, text, onExplain }: { icon: string, title: string, text: string, onExplain: (t: string) => void }) => (
   <InfoCard className="text-center flex flex-col justify-between">
     <div>
       <div className="text-5xl mb-4 text-blue-500">{icon}</div>
@@ -45,7 +45,7 @@ const BenefitCard = ({ icon, title, text, onExplain }) => (
 );
 
 // A simple modal component for displaying Gemini content
-const Modal = ({ isOpen, onClose, title, children, isLoading }) => {
+const Modal = ({ isOpen, onClose, title, children, isLoading }: { isOpen: boolean, onClose: () => void, title: string, children: React.ReactNode, isLoading: boolean }) => {
   if (!isOpen) return null;
 
   return (
