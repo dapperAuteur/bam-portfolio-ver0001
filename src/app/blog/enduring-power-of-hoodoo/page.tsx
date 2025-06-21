@@ -86,10 +86,8 @@ export default function HoodooInfographic() {
         plugins: {
             legend: { display: false },
             tooltip: {
-                callbacks: {
-                    title: function(tooltipItems) {
-                        console.log('typeof tooltipItems :>> ', typeof tooltipItems);
-                        console.log('tooltipItems :>> ', tooltipItems);
+                callbacks: { // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    title: function(tooltipItems: { chart: { data: { labels: any; }; }; dataIndex: any; }[]) {
                         const item = tooltipItems[0];
                         const label = item.chart.data.labels[item.dataIndex];
                         return Array.isArray(label) ? label.join(' ') : label;
