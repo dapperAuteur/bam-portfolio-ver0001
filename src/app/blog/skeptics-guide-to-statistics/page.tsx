@@ -1,7 +1,7 @@
 "use client"
 
-import React, { useState, useEffect, useCallback, JSX } from 'react';
-import { ShieldAlert, Fingerprint, SearchX, MessageSquareWarning, Lightbulb, BrainCircuit, ArrowRight, Loader2, Scale, Microscope, Users } from 'lucide-react';
+import React, { useState, useCallback, JSX } from 'react';
+import { ShieldAlert, Fingerprint, SearchX, MessageSquareWarning, BrainCircuit, ArrowRight, Loader2, Scale, Microscope, Users } from 'lucide-react';
 
 // Main App Component
 export default function App() {

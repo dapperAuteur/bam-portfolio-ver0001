@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, JSX } from 'react';
-import { BarChart3, Calculator, Percent, MessageSquareQuote, Lightbulb, BrainCircuit, AlertTriangle, ArrowRight, Loader2, Info } from 'lucide-react';
+import React, { useState, JSX } from 'react';
+import { BarChart3, Calculator, Percent, MessageSquareQuote, Lightbulb, BrainCircuit, Loader2, Info } from 'lucide-react';
 
 // Main App Component
 export default function App() {

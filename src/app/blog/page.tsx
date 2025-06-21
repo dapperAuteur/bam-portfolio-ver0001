@@ -112,7 +112,7 @@ export default function BlogPage() {
         <article className="bg-card-background rounded-xl shadow-lg p-6 border border-card-border">
           <Link href="/blog/interactive-indiana-corvid-species-analysis"> {/* Link to the new page */}
             <h2 className="text-2xl font-semibold text-card-text hover:text-primary transition-colors duration-200">
-              Indiana Corvid Species Analysis: Comparative Mass Analysis
+              Interactive Indiana Corvid Species Analysis: Comparative Mass Analysis
             </h2>
           </Link>
           <p className="text-secondaryText text-sm mt-1">June 17, 2025 | Categories: <span className="inline-block bg-primary-light text-primary text-xs font-medium px-2 py-0.5 rounded-full">Health Tech</span> <span className="inline-block bg-accent text-white text-xs font-medium px-2 py-0.5 rounded-full">AI</span> <span className="inline-block bg-secondaryText text-white text-xs font-medium px-2 py-0.5 rounded-full">Infographic</span></p>

@@ -5,6 +5,23 @@ import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables);
 
+interface Corvid {
+  species: string;
+  eq: string;
+  habitat: string;
+  beakStyle: string;
+  beakUsage: string;
+  flightStyle: string;
+  nesting: string;
+  color: string;
+  mass: number;
+  plumage: string;
+  size: number;
+  socialBehavior: string;
+  vocalization: string;
+  wingspan: number;
+}
+
 const corvidData = [
   {
     species: "American Crow",
@@ -74,7 +91,7 @@ const corvidData = [
 
 // Main Component
 const CorvidInfographic = () => {
-  const [selectedCorvid, setSelectedCorvid] = useState(corvidData[0]);
+  const [selectedCorvid, setSelectedCorvid] = useState<Corvid | null>(corvidData[0]);
   const [aiSummary, setAiSummary] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const chartRef = useRef(null);
@@ -84,15 +101,17 @@ const CorvidInfographic = () => {
     if (chartInstance.current) {
       chartInstance.current.destroy();
     }
-    const myChartRef = chartRef.current.getContext('2d');
+    const myChartRef = chartRef.current?.getContext('2d');
     
-    const processLabels = (labels) => {
-        return labels.map(label => {
+    const processLabels = (labels: string[]) => {
+        return labels.map((label: string) => {
             if (label.length > 16) {
                 const words = label.split(' ');
                 const lines = [];
                 let currentLine = '';
                 words.forEach(word => {
+      console.log('typeof word :>> ', typeof word);
+      console.log('word :>> ', word);
                     if ((currentLine + word).length > 16 && currentLine.length > 0) {
                         lines.push(currentLine.trim());
                         currentLine = word + ' ';
@@ -147,7 +166,7 @@ const CorvidInfographic = () => {
             callbacks: {
                 title: function(tooltipItems) {
                     const item = tooltipItems[0];
-                    let label = item.chart.data.labels[item.dataIndex];
+                    const label = item.chart.data.labels?.[item.dataIndex];
                     if (Array.isArray(label)) {
                       return label.join(' ');
                     }
@@ -166,7 +185,7 @@ const CorvidInfographic = () => {
     };
   }, []);
 
-  const handleSelectCorvid = (corvid) => {
+  const handleSelectCorvid = (corvid: Corvid) => {
     setSelectedCorvid(corvid);
     setAiSummary('');
   };
@@ -228,7 +247,7 @@ const CorvidInfographic = () => {
             <div className="chart-container h-96">
               <canvas ref={chartRef} />
             </div>
-            <p className="text-sm text-gray-500 mt-4 text-center">This chart visualizes the significant size differences among Indiana's common corvids.</p>
+            <p className="text-sm text-gray-500 mt-4 text-center">This chart visualizes the significant size differences among Indiana&apos;s common corvids.</p>
           </div>
 
           <div className="bg-gray-800 p-6 rounded-lg shadow-xl">
@@ -239,7 +258,7 @@ const CorvidInfographic = () => {
                   key={corvid.species}
                   onClick={() => handleSelectCorvid(corvid)}
                   className={`px-4 py-2 text-sm font-semibold rounded-full transition-colors ${
-                    selectedCorvid.species === corvid.species
+                    selectedCorvid?.species === corvid.species
                       ? 'bg-blue-500 text-white'
                       : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                   }`}

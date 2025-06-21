@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, type JSX } from 'react';
-import { BookOpen, FlaskConical, TestTube2, Users, Microscope, MessageCircle, Lightbulb, BrainCircuit, ScanSearch, AlertTriangle, CheckCircle, ArrowRight, Loader2 } from 'lucide-react';
+import { BookOpen, FlaskConical, TestTube2, Users, MessageCircle, Lightbulb, BrainCircuit, ScanSearch, AlertTriangle, ArrowRight, Loader2 } from 'lucide-react';
 
 // Main App Component
 export default function App() {

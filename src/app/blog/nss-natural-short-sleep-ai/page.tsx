@@ -39,33 +39,32 @@ const Sik3Infographic = () => {
     const [hypothesis, setHypothesis] = useState('');
     const [isHypothesisLoading, setIsHypothesisLoading] = useState(false);
 
-    // Data for the Bar Chart
-    const chartData = {
-        labels: [
-            wrapLabel('Total Sleep Reduction (24h)', 16),
-            wrapLabel('Sleep Rebound Post-Deprivation', 16),
-            wrapLabel('NREM Sleep Intensity (Delta Power)', 16)
-        ],
-        datasets: [{
-            label: 'Change vs. Control',
-            data: [-31.8, -54, 15],
-            backgroundColor: [
-                'rgba(212, 80, 135, 0.7)',
-                'rgba(102, 81, 145, 0.7)',
-                'rgba(0, 63, 92, 0.7)',
-            ],
-            borderColor: [
-                '#d45087',
-                '#665191',
-                '#003f5c',
-            ],
-            borderWidth: 2,
-            borderRadius: 4,
-        }]
-    };
-
     // Effect to create and destroy the chart
     useEffect(() => {
+        // Data for the Bar Chart
+        const chartData = {
+            labels: [
+                wrapLabel('Total Sleep Reduction (24h)', 16),
+                wrapLabel('Sleep Rebound Post-Deprivation', 16),
+                wrapLabel('NREM Sleep Intensity (Delta Power)', 16)
+            ],
+            datasets: [{
+                label: 'Change vs. Control',
+                data: [-31.8, -54, 15],
+                backgroundColor: [
+                    'rgba(212, 80, 135, 0.7)',
+                    'rgba(102, 81, 145, 0.7)',
+                    'rgba(0, 63, 92, 0.7)',
+                ],
+                borderColor: [
+                    '#d45087',
+                    '#665191',
+                    '#003f5c',
+                ],
+                borderWidth: 2,
+                borderRadius: 4,
+            }]
+        };
         if (chartRef.current) {
             if (chartInstanceRef.current) {
                 chartInstanceRef.current.destroy();
@@ -116,7 +115,7 @@ const Sik3Infographic = () => {
                 chartInstanceRef.current.destroy();
             }
         };
-    }, [chartData]);
+    }, []);
 
     // Function to call Gemini API
     const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
