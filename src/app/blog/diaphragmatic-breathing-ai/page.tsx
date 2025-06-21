@@ -67,8 +67,8 @@ const Modal = ({ isOpen, onClose, title, children, isLoading }: { isOpen: boolea
 
 // Main Infographic Component
 const DiaphragmaticBreathingInfographic = () => {
-  const cardioChartRef = useRef(null);
-  const voiceChartRef = useRef(null);
+  const cardioChartRef = useRef<HTMLCanvasElement | null>(null);
+  const voiceChartRef = useRef<HTMLCanvasElement | null>(null);
 
   // State management for Gemini features
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -165,11 +165,12 @@ const DiaphragmaticBreathingInfographic = () => {
 
   // Chart drawing logic
   useEffect(() => {
-    let cardioChartInstance = null;
-    let voiceChartInstance = null;
+    let cardioChartInstance: ChartJS | null = null;
+    let voiceChartInstance: ChartJS | null = null;
 
     if (cardioChartRef.current) {
       const cardioCtx = cardioChartRef.current.getContext('2d');
+      if(!cardioCtx) return;
       cardioChartInstance = new ChartJS(cardioCtx, {
         type: 'bar',
         data: {
@@ -202,6 +203,7 @@ const DiaphragmaticBreathingInfographic = () => {
 
     if (voiceChartRef.current) {
       const voiceCtx = voiceChartRef.current.getContext('2d');
+      if(!voiceCtx) return;
       voiceChartInstance = new ChartJS(voiceCtx, {
         type: 'radar',
         data: {
