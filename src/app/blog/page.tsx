@@ -10,6 +10,48 @@ export default function BlogPage() {
 
       <div className="mt-12 space-y-8">
         <article className="bg-card-background rounded-xl shadow-lg p-6 border border-card-border">
+          <Link href="/blog/skeptics-guide-to-statistics"> {/* Link to the new page */}
+            <h2 className="text-2xl font-semibold text-card-text hover:text-primary transition-colors duration-200">
+              The Skeptic&apos;s Guide to Statistics: How Data Can Be Misused & What to Look For
+            </h2>
+          </Link>
+          <p className="text-secondaryText text-sm mt-1">June 17, 2025 | Categories: <span className="inline-block bg-primary-light text-primary text-xs font-medium px-2 py-0.5 rounded-full">Health Tech</span> <span className="inline-block bg-accent text-white text-xs font-medium px-2 py-0.5 rounded-full">AI</span> <span className="inline-block bg-secondaryText text-white text-xs font-medium px-2 py-0.5 rounded-full">Infographic</span></p>
+          <p className="text-card-text mt-4">
+            Misinformation isn&apos;t always about fake data. Often, it&apos;s about presenting real data in a misleading way. Here are the most common traps.
+          </p>
+          <Link href="/blog/skeptics-guide-to-statistics" className="mt-4 inline-block text-primary hover:text-primary-dark font-medium transition-colors duration-200">
+              Read More &rarr;
+          </Link>
+        </article>
+        <article className="bg-card-background rounded-xl shadow-lg p-6 border border-card-border">
+          <Link href="/blog/making-sense-of-statistics"> {/* Link to the new page */}
+            <h2 className="text-2xl font-semibold text-card-text hover:text-primary transition-colors duration-200">
+              Making Sense of Statistics: A Guide to Understanding & Explaining Data
+            </h2>
+          </Link>
+          <p className="text-secondaryText text-sm mt-1">June 17, 2025 | Categories: <span className="inline-block bg-primary-light text-primary text-xs font-medium px-2 py-0.5 rounded-full">Health Tech</span> <span className="inline-block bg-accent text-white text-xs font-medium px-2 py-0.5 rounded-full">AI</span> <span className="inline-block bg-secondaryText text-white text-xs font-medium px-2 py-0.5 rounded-full">Infographic</span></p>
+          <p className="text-card-text mt-4">
+            Statistics help us describe data and draw inferences. These are the building blocks.
+          </p>
+          <Link href="/blog/making-sense-of-statistics" className="mt-4 inline-block text-primary hover:text-primary-dark font-medium transition-colors duration-200">
+              Read More &rarr;
+          </Link>
+        </article>
+        <article className="bg-card-background rounded-xl shadow-lg p-6 border border-card-border">
+          <Link href="/blog/scientific-study-infographic"> {/* Link to the new page */}
+            <h2 className="text-2xl font-semibold text-card-text hover:text-primary transition-colors duration-200">
+              Scientific Study Infographic: An Interactive Guide to Reading & Communicating Science
+            </h2>
+          </Link>
+          <p className="text-secondaryText text-sm mt-1">June 17, 2025 | Categories: <span className="inline-block bg-primary-light text-primary text-xs font-medium px-2 py-0.5 rounded-full">Health Tech</span> <span className="inline-block bg-accent text-white text-xs font-medium px-2 py-0.5 rounded-full">AI</span> <span className="inline-block bg-secondaryText text-white text-xs font-medium px-2 py-0.5 rounded-full">Infographic</span></p>
+          <p className="text-card-text mt-4">
+            The design of a study determines the strength of its conclusions. Understanding the type is the first step to critical appraisal.
+          </p>
+          <Link href="/blog/scientific-study-infographic" className="mt-4 inline-block text-primary hover:text-primary-dark font-medium transition-colors duration-200">
+              Read More &rarr;
+          </Link>
+        </article>
+        <article className="bg-card-background rounded-xl shadow-lg p-6 border border-card-border">
           <Link href="/blog/journey-into-african-spiritual-traditions"> {/* Link to the new page */}
             <h2 className="text-2xl font-semibold text-card-text hover:text-primary transition-colors duration-200">
               Unveiling the Myriad Worlds: An Infographic Journey into African Spiritual Traditions

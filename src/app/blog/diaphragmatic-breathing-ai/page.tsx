@@ -20,18 +20,18 @@ ChartJS.register(
 );
 
 // Reusable components for styling sections
-const SectionTitle = ({ children }) => (
+const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">{children}</h2>
 );
 
-const InfoCard = ({ children, className = '' }) => (
+const InfoCard = ({ children, className = '' }: { children: React.ReactNode, className?: string }) => (
   <div className={`bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 ${className}`}>
     {children}
   </div>
 );
 
 // Benefit card now includes a button to trigger the Gemini explanation
-const BenefitCard = ({ icon, title, text, onExplain }) => (
+const BenefitCard = ({ icon, title, text, onExplain }: { icon: string, title: string, text: string, onExplain: (title: string) => void }) => (
   <InfoCard className="text-center flex flex-col justify-between">
     <div>
       <div className="text-5xl mb-4 text-blue-500">{icon}</div>
@@ -45,7 +45,7 @@ const BenefitCard = ({ icon, title, text, onExplain }) => (
 );
 
 // A simple modal component for displaying Gemini content
-const Modal = ({ isOpen, onClose, title, children, isLoading }) => {
+const Modal = ({ isOpen, onClose, title, children, isLoading }: { isOpen: boolean, onClose: () => void, title: string, children: React.ReactNode, isLoading: boolean }) => {
   if (!isOpen) return null;
 
   return (
@@ -71,16 +71,16 @@ const DiaphragmaticBreathingInfographic = () => {
   const voiceChartRef = useRef(null);
 
   // State management for Gemini features
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalContent, setModalContent] = useState('');
-  const [isModalLoading, setIsModalLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalTitle, setModalTitle] = useState<string>('');
+  const [modalContent, setModalContent] = useState<string>('');
+  const [isModalLoading, setIsModalLoading] = useState<boolean>(false);
 
-  const [practiceGoals, setPracticeGoals] = useState([]);
-  const [sessionDuration, setSessionDuration] = useState('10');
-  const [generatedPlan, setGeneratedPlan] = useState('');
-  const [isPlanLoading, setIsPlanLoading] = useState(false);
-  const [planError, setPlanError] = useState('');
+  const [practiceGoals, setPracticeGoals] = useState<string[]>([]);
+  const [sessionDuration, setSessionDuration] = useState<string>('10');
+  const [generatedPlan, setGeneratedPlan] = useState<string>('');
+  const [isPlanLoading, setIsPlanLoading] = useState<boolean>(false);
+  const [planError, setPlanError] = useState<string>('');
 
   const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
   // const genAI = GEMINI_API_KEY ? new GoogleGenerativeAI(GEMINI_API_KEY) : null;
@@ -89,8 +89,6 @@ const DiaphragmaticBreathingInfographic = () => {
     // API key is handled by the environment, no need to add one here.
     const apiKey = GEMINI_API_KEY;
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-    console.log('GEMINI_API_KEY :>> ', GEMINI_API_KEY);
-
     const payload = {
       contents: [{ role: "user", parts: [{ text: prompt }] }]
     };
@@ -128,17 +126,18 @@ const DiaphragmaticBreathingInfographic = () => {
       const explanation = await callGeminiAPI(prompt);
       setModalContent(explanation);
     } catch (error) {
-      setModalContent(`Sorry, we couldn't fetch more details at this time. Error: ${error.message}`);
+ setModalContent(`Sorry, we couldn't fetch more details at this time. Error: ${(error as Error).message}`);
     } finally {
       setIsModalLoading(false);
     }
   };
 
   // Handler for goal selection in the plan generator
-  const handleGoalChange = (event) => {
+  const handleGoalChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
-    setPracticeGoals(prev => 
-      checked ? [...prev, value] : prev.filter(goal => goal !== value)
+    setPracticeGoals(prev => {
+      return checked ? [...prev, value] : prev.filter(goal => goal !== value)
+    }
     );
   };
 
@@ -158,7 +157,7 @@ const DiaphragmaticBreathingInfographic = () => {
       const plan = await callGeminiAPI(prompt);
       setGeneratedPlan(plan);
     } catch (error) {
-      setPlanError(`Sorry, we couldn't generate your plan. Error: ${error.message}`);
+ setPlanError(`Sorry, we couldn't generate your plan. Error: ${(error as Error).message}`);
     } finally {
       setIsPlanLoading(false);
     }
