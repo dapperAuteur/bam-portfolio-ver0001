@@ -81,11 +81,10 @@ export default function HoodooInfographic() {
         }]
     };
     
-    const chartOptions: ChartOptions<'bar' | 'doughnut'> = {
+    const commonChartOptions = {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-            legend: { display: false },
             tooltip: {
                 callbacks: {
                     title: function(tooltipItems: TooltipItem<'bar' | 'doughnut'>[]) {
@@ -96,6 +95,17 @@ export default function HoodooInfographic() {
                 }
             }
         }
+    };
+
+    const barChartOptions: ChartOptions<'bar'> = {
+        ...commonChartOptions,
+        indexAxis: 'y',
+        plugins: { ...commonChartOptions.plugins, legend: { display: false } }
+    };
+
+    const doughnutChartOptions: ChartOptions<'doughnut'> = {
+        ...commonChartOptions,
+        plugins: { ...commonChartOptions.plugins, legend: { display: true, position: 'bottom' } }
     };
 
     // --- Gemini API Call Logic ---
@@ -230,11 +240,11 @@ export default function HoodooInfographic() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                             <div>
                                 <h3 className="text-2xl font-bold text-center mb-4 text-[#593C1F] font-serif">Primary Aims of Workings</h3>
-                                <div className="chart-container"><Bar options={{ ...chartOptions, indexAxis: 'y' }} data={aimsChartData} /></div>
+                                <div className="chart-container"><Bar options={barChartOptions} data={aimsChartData} /></div>
                             </div>
                             <div>
                                 <h3 className="text-2xl font-bold text-center mb-4 text-[#593C1F] font-serif">Anatomy of a Mojo Bag</h3>
-                                 <div className="chart-container"><Doughnut options={{...chartOptions, plugins: {...chartOptions.plugins, legend: { position: 'bottom' }}}} data={mojoChartData} /></div>
+                                 <div className="chart-container"><Doughnut options={doughnutChartOptions} data={mojoChartData} /></div>
                             </div>
                         </div>
                     </section>
