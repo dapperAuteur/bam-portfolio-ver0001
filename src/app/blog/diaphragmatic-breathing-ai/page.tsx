@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from 'react';
-import { AppError } from '@/types/errors'; // Import the custom error interface
+import React, { useEffect, useRef, useState } from 'react'; // Import the custom error interface
+import type { AppError } from '@/types/errors';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, BarController, Title, Tooltip, Legend, RadialLinearScale, PointElement, LineElement, Filler, RadarController } from 'chart.js';
 
 // Register all necessary components for Chart.js
