@@ -1,8 +1,9 @@
 "use client"
 import React, { useState } from 'react';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement, ChartOptions, TooltipItem } from 'chart.js';
 import { Bar, Doughnut } from 'react-chartjs-2';
 
+import { AppError } from '../../../types/errors';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 
 interface MateriaMedica {
@@ -80,17 +81,17 @@ export default function HoodooInfographic() {
         }]
     };
     
-    const chartOptions = {
+    const chartOptions: ChartOptions<'bar' | 'doughnut'> = {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
             legend: { display: false },
             tooltip: {
-                callbacks: { // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    title: function(tooltipItems: { chart: { data: { labels: any; }; }; dataIndex: any; }[]) {
+                callbacks: {
+                    title: function(tooltipItems: TooltipItem<'bar' | 'doughnut'>[]) {
                         const item = tooltipItems[0];
-                        const label = item.chart.data.labels[item.dataIndex];
-                        return Array.isArray(label) ? label.join(' ') : label;
+                        const label = item?.chart.data.labels?.[item.dataIndex];
+                        return (Array.isArray(label) ? label.join(' ') : label as string) || '';
                     }
                 }
             }
@@ -126,9 +127,9 @@ export default function HoodooInfographic() {
             } else {
                 return "Sorry, I couldn't retrieve that information. The response from the AI was not as expected.";
             }
-        } catch (error) {
+        } catch (error: unknown) {
             console.error('Error calling Gemini API:', error);
-            return "Sorry, there was an error connecting to the AI. Please try again later.";
+            return `Sorry, there was an error connecting to the AI: ${(error as AppError).message}. Please try again later.`;
         }
     }
 

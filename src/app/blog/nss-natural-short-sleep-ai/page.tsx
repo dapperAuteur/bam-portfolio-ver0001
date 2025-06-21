@@ -1,10 +1,12 @@
 "use client"
 import React, { useState, useEffect, useRef } from 'react';
-import { Chart, registerables } from 'chart.js';
+import { Chart, registerables, TooltipItem } from 'chart.js';
 Chart.register(...registerables);
+import { AppError } from '../../../types/errors';
+
 
 // Helper function to wrap long labels for charts
-const wrapLabel = (str, maxLen) => {
+const wrapLabel = (str: string, maxLen: number) => {
     if (str.length <= maxLen) {
         return str;
     }
@@ -26,8 +28,8 @@ const wrapLabel = (str, maxLen) => {
 
 // Main Infographic Component
 const Sik3Infographic = () => {
-    const chartRef = useRef(null);
-    const chartInstanceRef = useRef(null);
+    const chartRef = useRef<HTMLCanvasElement | null>(null);
+    const chartInstanceRef = useRef<Chart | null>(null);
 
     // State for AI Modal
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -70,6 +72,7 @@ const Sik3Infographic = () => {
                 chartInstanceRef.current.destroy();
             }
             const ctx = chartRef.current.getContext('2d');
+            if (!ctx) return;
             chartInstanceRef.current = new Chart(ctx, {
                 type: 'bar',
                 data: chartData,
@@ -90,14 +93,16 @@ const Sik3Infographic = () => {
                         legend: { display: false },
                         tooltip: {
                             callbacks: {
-                                title: (tooltipItems) => {
+                                title: (tooltipItems: TooltipItem<'bar'>[]) => {
                                     const item = tooltipItems[0];
-                                    const label = item.chart.data.labels?.[item.dataIndex]
-                                    return Array.isArray(label) ? label.join(' ') : String(label);
+                                    const label = item?.chart.data.labels?.[item.dataIndex];
+                                    return (Array.isArray(label) ? label.join(' ') : label as string) || '';
                                 },
-                                label: (context) => {
+                                label: (context: TooltipItem<'bar'>) => {
                                     const value = context.parsed.x;
-                                    if (context.label.join(' ').includes('Intensity')) {
+                                    const axisLabel = context.chart.data.labels?.[context.dataIndex];
+                                    const labelString = Array.isArray(axisLabel) ? axisLabel.join(' ') : String(axisLabel || '');
+                                    if (labelString.includes('Intensity')) {
                                         return `+${value}% (Increased Efficiency)`;
                                     } else {
                                         return `${value} min (Reduced Duration)`;
@@ -146,9 +151,9 @@ const Sik3Infographic = () => {
             } else {
                 return "Sorry, I couldn't get a proper answer. The response was unexpected.";
             }
-        } catch (error) {
+        } catch (error: unknown) {
             console.error("Gemini API call error:", error);
-            return `An error occurred: ${error.message}. Please try again.`;
+            return `An error occurred: ${(error as AppError).message}. Please try again.`;
         }
     };
     
@@ -294,7 +299,7 @@ const Sik3Infographic = () => {
                         <textarea
                             value={aiQuestion}
                             onChange={(e) => setAiQuestion(e.target.value)}
-                            rows="3"
+                            rows={3}
                             className="w-full p-2 border border-slate-300 rounded-md mb-4 focus:ring-indigo-500 focus:border-indigo-500"
                             placeholder="e.g., Explain why lower SIK3 activity leads to less sleep."
                         />

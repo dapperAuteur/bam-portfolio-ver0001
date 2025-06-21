@@ -1,7 +1,8 @@
 "use client"
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Chart, registerables } from 'chart.js';
+import { Chart, registerables, TooltipItem } from 'chart.js';
+import { AppError } from '../../../types/errors';
 
 Chart.register(...registerables);
 
@@ -94,15 +95,17 @@ const CorvidInfographic = () => {
   const [selectedCorvid, setSelectedCorvid] = useState<Corvid | null>(corvidData[0]);
   const [aiSummary, setAiSummary] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const chartRef = useRef(null);
-  const chartInstance = useRef(null);
+  const chartRef = useRef<HTMLCanvasElement | null>(null);
+  const chartInstance = useRef<Chart | null>(null);
 
   useEffect(() => {
     if (chartInstance.current) {
       chartInstance.current.destroy();
     }
     const myChartRef = chartRef.current?.getContext('2d');
-    
+    if (!myChartRef) {
+        return;
+    }
     const processLabels = (labels: string[]) => {
         return labels.map((label: string) => {
             if (label.length > 16) {
@@ -164,13 +167,13 @@ const CorvidInfographic = () => {
           },
           tooltip: {
             callbacks: {
-                title: function(tooltipItems) {
+                title: function(tooltipItems: TooltipItem<'bar'>[]) {
                     const item = tooltipItems[0];
-                    const label = item.chart.data.labels?.[item.dataIndex];
+                    const label = item?.chart.data.labels?.[item.dataIndex];
                     if (Array.isArray(label)) {
                       return label.join(' ');
                     }
-                    return label;
+                    return (label as string) || '';
                 }
             }
           }
@@ -225,9 +228,9 @@ const CorvidInfographic = () => {
         } else {
             setAiSummary('Could not generate summary.');
         }
-    } catch (error) {
+    } catch (error: unknown) {
         console.error("Gemini API error:", error);
-        setAiSummary('Error generating summary. Please try again.');
+        setAiSummary(`Error generating summary: ${(error as AppError).message}`);
     } finally {
         setIsLoading(false);
     }
