@@ -90,14 +90,16 @@ const App = () => {
   const [mythExplanations, setMythExplanations] = useState<MythExplanations>({});
   const [isLoadingSummary, setIsLoadingSummary] = useState(false);
   const [isLoadingMyth, setIsLoadingMyth] = useState<string | null>(null); // State to track which myth is being loaded
-  const chartRef = useRef(null);
-  const chartInstance = useRef(null);
+  const chartRef = useRef<HTMLCanvasElement | null>(null);
+  const chartInstance = useRef<Chart | null>(null);
 
   useEffect(() => {
     if (chartInstance.current) {
       chartInstance.current.destroy();
     }
-    const myChartRef = chartRef.current?.getContext('2d') as CanvasRenderingContext2D;
+    if (!chartRef.current) return;
+    const myChartRef = chartRef.current.getContext('2d');
+    if (!myChartRef) return;
     
     chartInstance.current = new Chart(myChartRef, {
       type: 'bar',
