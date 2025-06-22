@@ -1,5 +1,6 @@
 "use client";
 
+import { AppError } from '../../../types/errors';
 import React, { useEffect, useRef, useState } from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, BarController, Title, Tooltip, Legend, RadialLinearScale, PointElement, LineElement, Filler, RadarController } from 'chart.js';
 
@@ -125,8 +126,8 @@ const DiaphragmaticBreathingInfographic = () => {
     try {
       const explanation = await callGeminiAPI(prompt);
       setModalContent(explanation);
-    } catch (error) {
- setModalContent(`Sorry, we couldn't fetch more details at this time. Error: ${(error as Error).message}`);
+    } catch (error: unknown) {
+ setModalContent(`Sorry, we couldn't fetch more details at this time. Error: ${(error as AppError).message}`);
     } finally {
       setIsModalLoading(false);
     }
@@ -156,8 +157,8 @@ const DiaphragmaticBreathingInfographic = () => {
     try {
       const plan = await callGeminiAPI(prompt);
       setGeneratedPlan(plan);
-    } catch (error) {
- setPlanError(`Sorry, we couldn't generate your plan. Error: ${(error as Error).message}`);
+    } catch (error: unknown) {
+ setPlanError(`Sorry, we couldn't generate your plan. Error: ${(error as AppError).message}`);
     } finally {
       setIsPlanLoading(false);
     }

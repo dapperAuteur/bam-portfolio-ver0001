@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, JSX } from 'react';
+import { AppError } from '../../../types/errors';
 import { BarChart3, Calculator, Percent, MessageSquareQuote, Lightbulb, BrainCircuit, Loader2, Info } from 'lucide-react';
 
 // Main App Component
@@ -162,8 +163,8 @@ const GeminiStatTranslator = () => {
             } else {
                 throw new Error("Invalid API response structure.");
             }
-        } catch (e) {
-            setError(e.message || "An error occurred.");
+        } catch (e: unknown) {
+            setError((e as AppError).message || "An error occurred.");
             console.error(e);
         } finally {
             setIsLoading(false);
@@ -244,8 +245,8 @@ const GeminiRiskExplainer = () => {
             } else {
                 throw new Error("Invalid API response structure.");
             }
-        } catch (e) {
-            setError(e.message || "An error occurred.");
+        } catch (e: unknown) {
+            setError((e as AppError).message || "An error occurred.");
             console.error(e);
         } finally {
             setIsLoading(false);

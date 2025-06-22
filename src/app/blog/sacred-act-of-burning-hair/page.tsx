@@ -2,6 +2,7 @@
 
 'use client';
 
+import { AppError } from '../../../types/errors';
 import React, { useState, useEffect, useRef } from 'react';
 import { Chart, DoughnutController, ArcElement, Legend, Tooltip, Title } from 'chart.js';
 
@@ -73,8 +74,8 @@ export default function HairBeliefsInfographic() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const chartContainer = useRef(null);
-    const chartInstance = useRef(null);
+    const chartContainer = useRef<HTMLCanvasElement | null>(null);
+    const chartInstance = useRef<Chart | null>(null);
     
     const activeCultureData = comparisonData[selectedCulture];
 
@@ -85,6 +86,8 @@ export default function HairBeliefsInfographic() {
             }
 
             const ctx = chartContainer.current.getContext('2d');
+            if (!ctx) return;
+
             const chartLabels = Object.keys(activeCultureData.methods).map(label => wrapLabel(label));
 
             chartInstance.current = new Chart(ctx, {
@@ -204,9 +207,9 @@ export default function HairBeliefsInfographic() {
             } else {
                 throw new Error("Received an unexpected response structure from the API.");
             }
-        } catch (err) {
+        } catch (err: unknown) {
             console.error("Gemini API Error:", err);
-            setError(`Sorry, an error occurred. ${err.message}`);
+            setError(`Sorry, an error occurred. ${(err as AppError).message}`);
         } finally {
             setIsLoading(false);
         }

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement, BubbleController, ChartOptions } from 'chart.js';
+import { AppError } from '../../../types/errors';
 import { Radar, Bubble, Bar } from 'react-chartjs-2';
 
 // Register Chart.js components
@@ -254,9 +255,9 @@ export default function AfricanSpiritualityInfographic() {
             } else {
                  setAiOutputs(prev => ({ ...prev, [uniqueId]: "The AI scribe is resting. Please try again later." }));
             }
-        } catch (error) {
+        } catch (error: unknown) {
             console.error("Gemini API call failed:", error);
-            setAiOutputs(prev => ({ ...prev, [uniqueId]: "Could not connect to the AI scribe. Check the connection." }));
+            setAiOutputs(prev => ({ ...prev, [uniqueId]: `Could not connect to the AI scribe: ${(error as AppError).message}` }));
         } finally {
             setLoadingStates(prev => ({ ...prev, [uniqueId]: false }));
         }

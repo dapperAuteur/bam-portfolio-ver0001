@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Chart, registerables } from 'chart.js';
+import { AppError } from '../../../types/errors';
 
 Chart.register(...registerables);
 
@@ -175,9 +176,9 @@ const App = () => {
           } else {
               return 'Could not generate a response. The AI model returned an unexpected format.';
           }
-      } catch (error) {
+      } catch (error: unknown) {
           console.error("Gemini API Error:", error);
-          return 'An error occurred while contacting the AI model. Please check the console.';
+          return `An error occurred: ${(error as AppError).message}. Please check the console.`;
       }
   };
 

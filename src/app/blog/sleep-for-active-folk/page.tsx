@@ -8,9 +8,7 @@ Chart.register(...registerables);
 // Visualization & Content Choices: 1. Elevated Sleep Needs -> Goal: Inform -> Viz: Big Number. 2. Pillars -> Goal: Organize -> Viz: HTML/CSS Cards. 3. Performance Decrements -> Goal: Compare -> Viz: Chart.js Bar Chart. 4. Injury Risk -> Goal: Inform -> Viz: Big Number. 5. Longevity -> Goal: Reveal Relationships -> Viz: Chart.js Bar Chart. 6. Anabolic Process -> Goal: Show Process -> Viz: HTML/CSS Flowchart. 7. AI Debunker -> Goal: Inform/Educate -> Viz: Text input + Gemini API response. All choices adhere to NO SVG/Mermaid constraints.
 
 // Helper function to wrap long labels for Chart.js
-const wrapLabel = (str, maxWidth = 16) => {
-    console.log('typeof str :>> ', typeof str);
-    console.log('str :>> ', str);
+const wrapLabel = (str: string, maxWidth = 16) => {
     if (str.length <= maxWidth) {
         return str;
     }
@@ -41,8 +39,8 @@ const tooltipTitleCallback = (tooltipItems) => {
 
 
 const SleepInfographic = () => {
-    const performanceChartRef = useRef(null);
-    const longevityChartRef = useRef(null);
+    const performanceChartRef = useRef<HTMLCanvasElement | null>(null);
+    const longevityChartRef = useRef<HTMLCanvasElement | null>(null);
     
     const [aiQuery, setAiQuery] = useState('');
     const [aiInsight, setAiInsight] = useState('');
@@ -98,12 +96,14 @@ const SleepInfographic = () => {
     };
 
     useEffect(() => {
-        let performanceChartInstance = null;
-        let longevityChartInstance = null;
+        let performanceChartInstance: Chart | null = null;
+        let longevityChartInstance: Chart | null = null;
 
         // Performance Chart
         if (performanceChartRef.current) {
             const performanceCtx = performanceChartRef.current.getContext('2d');
+            if (!performanceCtx) return;
+
             performanceChartInstance = new Chart(performanceCtx, {
                 type: 'bar',
                 data: {
@@ -141,6 +141,8 @@ const SleepInfographic = () => {
         // Longevity Chart
         if (longevityChartRef.current) {
             const longevityCtx = longevityChartRef.current.getContext('2d');
+            if (!longevityCtx) return;
+
             longevityChartInstance = new Chart(longevityCtx, {
                 type: 'bar',
                 data: {
