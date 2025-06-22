@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from 'react'; // Import the custom error interface
-import type { AppError } from '@/types/errors';
+import { AppError } from '../../../types/errors';
+import React, { useEffect, useRef, useState } from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, BarController, Title, Tooltip, Legend, RadialLinearScale, PointElement, LineElement, Filler, RadarController } from 'chart.js';
 
 // Register all necessary components for Chart.js
@@ -32,7 +32,7 @@ const InfoCard = ({ children, className = '' }: { children: React.ReactNode, cla
 );
 
 // Benefit card now includes a button to trigger the Gemini explanation
-const BenefitCard = ({ icon, title, text, onExplain }: { icon: string, title: string, text: string, onExplain: (t: string) => void }) => (
+const BenefitCard = ({ icon, title, text, onExplain }: { icon: string, title: string, text: string, onExplain: (title: string) => void }) => (
   <InfoCard className="text-center flex flex-col justify-between">
     <div>
       <div className="text-5xl mb-4 text-blue-500">{icon}</div>
@@ -68,20 +68,20 @@ const Modal = ({ isOpen, onClose, title, children, isLoading }: { isOpen: boolea
 
 // Main Infographic Component
 const DiaphragmaticBreathingInfographic = () => {
-  const cardioChartRef = useRef(null);
-  const voiceChartRef = useRef(null);
+  const cardioChartRef = useRef<HTMLCanvasElement | null>(null);
+  const voiceChartRef = useRef<HTMLCanvasElement | null>(null);
 
   // State management for Gemini features
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalContent, setModalContent] = useState('');
-  const [isModalLoading, setIsModalLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalTitle, setModalTitle] = useState<string>('');
+  const [modalContent, setModalContent] = useState<string>('');
+  const [isModalLoading, setIsModalLoading] = useState<boolean>(false);
 
   const [practiceGoals, setPracticeGoals] = useState<string[]>([]);
-  const [sessionDuration, setSessionDuration] = useState('10');
-  const [generatedPlan, setGeneratedPlan] = useState('');
-  const [isPlanLoading, setIsPlanLoading] = useState(false);
-  const [planError, setPlanError] = useState('');
+  const [sessionDuration, setSessionDuration] = useState<string>('10');
+  const [generatedPlan, setGeneratedPlan] = useState<string>('');
+  const [isPlanLoading, setIsPlanLoading] = useState<boolean>(false);
+  const [planError, setPlanError] = useState<string>('');
 
   const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
   // const genAI = GEMINI_API_KEY ? new GoogleGenerativeAI(GEMINI_API_KEY) : null;
@@ -90,8 +90,6 @@ const DiaphragmaticBreathingInfographic = () => {
     // API key is handled by the environment, no need to add one here.
     const apiKey = GEMINI_API_KEY;
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-    console.log('GEMINI_API_KEY :>> ', GEMINI_API_KEY);
-
     const payload = {
       contents: [{ role: "user", parts: [{ text: prompt }] }]
     };
@@ -128,10 +126,8 @@ const DiaphragmaticBreathingInfographic = () => {
     try {
       const explanation = await callGeminiAPI(prompt);
       setModalContent(explanation);
-    } catch (error: AppError) { // Type the caught error as AppError
-      const errorMessage = error.message || "An unexpected error occurred."; // Access message directly
-      
-      setModalContent(`Sorry, we couldn't fetch more details at this time. Error: ${errorMessage}`);
+    } catch (error: unknown) {
+ setModalContent(`Sorry, we couldn't fetch more details at this time. Error: ${(error as AppError).message}`);
     } finally {
       setIsModalLoading(false);
     }
@@ -140,8 +136,9 @@ const DiaphragmaticBreathingInfographic = () => {
   // Handler for goal selection in the plan generator
   const handleGoalChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
-    setPracticeGoals(prev => 
-      checked ? [...prev, value] : prev.filter(goal => goal !== value)
+    setPracticeGoals(prev => {
+      return checked ? [...prev, value] : prev.filter(goal => goal !== value)
+    }
     );
   };
 
@@ -160,8 +157,8 @@ const DiaphragmaticBreathingInfographic = () => {
     try {
       const plan = await callGeminiAPI(prompt);
       setGeneratedPlan(plan);
-    } catch (error: AppError) { // Type the caught error as AppError
-      setPlanError(`Sorry, we couldn't generate your plan. Error: ${error.message}`);
+    } catch (error: unknown) {
+ setPlanError(`Sorry, we couldn't generate your plan. Error: ${(error as AppError).message}`);
     } finally {
       setIsPlanLoading(false);
     }
@@ -169,11 +166,12 @@ const DiaphragmaticBreathingInfographic = () => {
 
   // Chart drawing logic
   useEffect(() => {
-    let cardioChartInstance = null;
-    let voiceChartInstance = null;
+    let cardioChartInstance: ChartJS | null = null;
+    let voiceChartInstance: ChartJS | null = null;
 
     if (cardioChartRef.current) {
-      const cardioCtx = (cardioChartRef.current as HTMLCanvasElement).getContext('2d');
+      const cardioCtx = cardioChartRef.current.getContext('2d');
+      if(!cardioCtx) return;
       cardioChartInstance = new ChartJS(cardioCtx, {
         type: 'bar',
         data: {
@@ -205,7 +203,8 @@ const DiaphragmaticBreathingInfographic = () => {
     }
 
     if (voiceChartRef.current) {
-      const voiceCtx = (voiceChartRef.current as HTMLCanvasElement).getContext('2d');
+      const voiceCtx = voiceChartRef.current.getContext('2d');
+      if(!voiceCtx) return;
       voiceChartInstance = new ChartJS(voiceCtx, {
         type: 'radar',
         data: {
