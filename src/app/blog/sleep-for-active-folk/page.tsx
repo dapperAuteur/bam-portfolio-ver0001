@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect, useRef } from 'react';
-import { Chart, registerables } from 'chart.js';
+import { Chart, registerables, TooltipItem } from 'chart.js';
+import { AppError } from '../../../types/errors';
 Chart.register(...registerables);
 
 // Chosen Palette: Brilliant Blues (as per previous infographic)
@@ -28,13 +29,13 @@ const wrapLabel = (str: string, maxWidth = 16) => {
 };
 
 // Helper for tooltip titles with wrapped labels
-const tooltipTitleCallback = (tooltipItems) => {
+const tooltipTitleCallback = (tooltipItems: TooltipItem<'bar'>[]) => {
     const item = tooltipItems[0];
-    const label = item.chart.data.labels[item.dataIndex];
+    const label = item?.chart.data.labels?.[item.dataIndex];
     if (Array.isArray(label)) {
       return label.join(' ');
     }
-    return label;
+    return (label as string) || '';
 };
 
 
@@ -87,9 +88,9 @@ const SleepInfographic = () => {
                 throw new Error("Could not generate an insight. The AI returned an empty response.");
             }
 
-        } catch (err) {
+        } catch (err: unknown) {
             console.error("Error fetching AI insight:", err);
-            setError(err.message || "An unexpected error occurred. Please try again.");
+            setError((err as AppError).message || "An unexpected error occurred. Please try again.");
         } finally {
             setIsLoading(false);
         }
@@ -128,7 +129,7 @@ const SleepInfographic = () => {
                     maintainAspectRatio: false,
                     plugins: {
                         legend: { display: false },
-                        tooltip: { callbacks: { title: tooltipTitleCallback, label: (context) => `${context.formattedValue}% Decrease` } }
+                        tooltip: { callbacks: { title: tooltipTitleCallback, label: (context: TooltipItem<'bar'>) => `${context.formattedValue}% Decrease` } }
                     },
                     scales: {
                         x: { title: { display: true, text: 'PERCENTAGE DECREASE (%)', font: { size: 14, family: 'Teko, sans-serif' } }, ticks: { callback: (value) => value + '%', font: { family: 'Roboto, sans-serif' } } },
@@ -164,7 +165,7 @@ const SleepInfographic = () => {
                         tooltip: {
                             callbacks: {
                                 title: tooltipTitleCallback,
-                                label: (context) => {
+                                label: (context: TooltipItem<'bar'>) => {
                                     const value = context.parsed.y;
                                     if (value === 1.0) return 'Baseline Risk';
                                     return `~${((value - 1) * 100).toFixed(0)}% Increased Risk`;
@@ -187,11 +188,11 @@ const SleepInfographic = () => {
     }, []);
     
     // Inline styles for fonts since Tailwind config cannot be modified here
-    const tekoFont = { fontFamily: "'Teko', sans-serif", textTransform: 'uppercase' };
-    const robotoFont = { fontFamily: "'Roboto', sans-serif" };
+    const tekoFont: React.CSSProperties = { fontFamily: "'Teko', sans-serif", textTransform: 'uppercase' };
+    const robotoFont: React.CSSProperties = { fontFamily: "'Roboto', sans-serif" };
 
     return (
-        <div style={robotoFont} className="bg-[#f0f9ff] text-[#003366] p-4 md:p-8">
+        <div style={robotoFont} className="bg-[#f0f9ff] text-[#003366] p-4 md:p-8 font-sans">
             {/* NOTE FOR DEVELOPER: For this component to display correctly with the intended fonts, 
               please ensure you import 'Teko' and 'Roboto' in your global stylesheet (e.g., globals.css or _app.js).
               Example: @import url('https://fonts.googleapis.com/css2?family=Teko:wght@500;700&family=Roboto:wght@400;700&display=swap');

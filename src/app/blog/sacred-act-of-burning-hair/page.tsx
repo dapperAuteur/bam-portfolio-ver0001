@@ -2,15 +2,24 @@
 
 'use client';
 
-import { AppError } from '../../../types/errors';
 import React, { useState, useEffect, useRef } from 'react';
-import { Chart, DoughnutController, ArcElement, Legend, Tooltip, Title } from 'chart.js';
+import { Chart, DoughnutController, ArcElement, Legend, Tooltip, Title, TooltipItem } from 'chart.js';
+import { AppError } from '../../../types/errors';
 
 // Register the necessary components for Chart.js
 Chart.register(DoughnutController, ArcElement, Legend, Tooltip, Title);
 
+interface ComparisonData {
+    [key: string]: {
+        name: string;
+        beliefs: string;
+        reasons: string;
+        methods: { [key: string]: number };
+    }
+}
+
 // --- Data based on the provided research report ---
-const comparisonData = {
+const comparisonData: ComparisonData = {
     african_american_hoodoo: {
         name: "African American (Hoodoo)",
         beliefs: "Hair holds spirit and energy, making it a powerful ingredient in rootwork. It maintains a strong connection to the individual and can be used for control or harm.",
@@ -130,12 +139,12 @@ export default function HairBeliefsInfographic() {
                             padding: 12,
                             cornerRadius: 4,
                             callbacks: {
-                                title: (tooltipItems) => {
+                                title: (tooltipItems: TooltipItem<'doughnut'>[]) => {
                                     const item = tooltipItems[0];
-                                    const label = item.chart.data?.labels?.[item.dataIndex];
-                                    return Array.isArray(label) ? label.join(' ') : label;
+                                    const label = item?.chart.data?.labels?.[item.dataIndex];
+                                    return (Array.isArray(label) ? label.join(' ') : label as string) || '';
                                 },
-                                label: (context) => {
+                                label: (context: TooltipItem<'doughnut'>) => {
                                     let label = context.dataset.label || '';
                                     if (label) {
                                         label += ': ';
@@ -161,7 +170,7 @@ export default function HairBeliefsInfographic() {
 
     }, [selectedCulture, activeCultureData]);
 
-    const handleCultureChange = (e) => {
+    const handleCultureChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedCulture(e.target.value);
         setQuestion('');
         setGeminiResponse('');

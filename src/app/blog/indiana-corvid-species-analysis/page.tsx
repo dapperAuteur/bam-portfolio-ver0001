@@ -113,8 +113,6 @@ const CorvidInfographic = () => {
                 const lines = [];
                 let currentLine = '';
                 words.forEach(word => {
-      console.log('typeof word :>> ', typeof word);
-      console.log('word :>> ', word);
                     if ((currentLine + word).length > 16 && currentLine.length > 0) {
                         lines.push(currentLine.trim());
                         currentLine = word + ' ';

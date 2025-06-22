@@ -1,5 +1,6 @@
 "use client";
 
+import { AppError } from '@/types/errors';
 import React, { useState, useEffect, useCallback, type JSX } from 'react';
 import { BookOpen, FlaskConical, TestTube2, Users, MessageCircle, Lightbulb, BrainCircuit, ScanSearch, AlertTriangle, ArrowRight, Loader2 } from 'lucide-react';
 
@@ -243,8 +244,8 @@ const GeminiExplainFeature = () => {
             } else {
                  throw new Error("Invalid response structure from API.");
             }
-        } catch (e) {
-            setError(e.message || "An unknown error occurred.");
+        } catch (e: unknown) {
+            setError((e as AppError).message || "An unknown error occurred.");
             console.error(e);
         } finally {
             setIsLoading(false);

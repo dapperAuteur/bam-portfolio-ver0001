@@ -143,7 +143,6 @@ const App = () => {
   }, []);
 
   const handleSelectCorvid = (corvid: Corvid) => {
-    console.log('corvid :>> ', corvid);
     setSelectedCorvid(corvid);
     setAiSummary('');
   };
@@ -199,7 +198,6 @@ Data:
   };
 
   const debunkMyth = async (mythId: string, mythTitle: string) => {
-    console.log('typeof mythId :>> ', typeof mythId);
       setIsLoadingMyth(mythId);
       setMythExplanations(prev => ({...prev, [mythId]: ''}));
 
