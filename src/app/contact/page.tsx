@@ -14,19 +14,19 @@ export default function ContactPage() {
               <FaEnvelope size={40} />
               <span className="mt-2 text-base">Email</span>
           </Link>
-          <Link href="http://www.linkedin.com/in/brandanthonymcdonald" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center text-primary hover:text-primary-dark transition-colors duration-200">
+          <Link href="https://l.awews.com/brand-am-linkedin" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center text-primary hover:text-primary-dark transition-colors duration-200">
               <FaLinkedin size={40} />
               <span className="mt-2 text-base">LinkedIn</span>
           </Link>
-          <Link href="https://github.com/dapperAuteur" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center text-primary hover:text-primary-dark transition-colors duration-200">
+          <Link href="https://i.til.show/dapperauteur-github" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center text-primary hover:text-primary-dark transition-colors duration-200">
               <FaGithub size={40} />
               <span className="mt-2 text-base">GitHub</span>
           </Link>
-          <Link href="https://www.tiktok.com/@thetodayilearnedshow" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center text-primary hover:text-primary-dark transition-colors duration-200">
+          <Link href="https://i.til.show/tilshow-tiktok" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center text-primary hover:text-primary-dark transition-colors duration-200">
               <FaTiktok size={40} />
               <span className="mt-2 text-base">TikTok</span>
           </Link>
-          <Link href="https://www.youtube.com/user/StrategicOptimizer" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center text-primary hover:text-primary-dark transition-colors duration-200">
+          <Link href="https://i.brandanthonymcdonald.com/bam-youtube" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center text-primary hover:text-primary-dark transition-colors duration-200">
               <FaYoutube size={40} />
               <span className="mt-2 text-base">YouTube</span>
           </Link>

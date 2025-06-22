@@ -217,8 +217,6 @@ export default function AfricanSpiritualityInfographic() {
     const handleAIGenerate = async (traditionKey: string, type: string) => {
         const uniqueId = `${traditionKey}-${type}`;
         setLoadingStates(prev => {
-            console.log('typeof prev :>> ', typeof prev);
-            console.log('prev :>> ', prev);
             return ({ ...prev, [uniqueId]: true })
     });
 
@@ -248,8 +246,6 @@ export default function AfricanSpiritualityInfographic() {
             if (result.candidates && result.candidates[0]?.content?.parts[0]?.text) {
                 const text = result.candidates[0].content.parts[0].text;
                 setAiOutputs(prev => {
-            console.log('typeof prev :>> ', typeof prev);
-            console.log('prev :>> ', prev);
                     return ({ ...prev, [uniqueId]: text.trim() })
             });
             } else {
