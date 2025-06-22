@@ -1,15 +1,24 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement, BubbleController } from 'chart.js';
+import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement, BubbleController, ChartOptions } from 'chart.js';
 import { Radar, Bubble, Bar } from 'react-chartjs-2';
 
 // Register Chart.js components
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement, BubbleController);
 
+interface SpiritualData {
+    [key: string]: {
+        name: string;
+        region: string;
+        description: string;
+        aiPromptContext: string;
+    };
+}
+
 // -- Data Object --
 // This object holds all the static content for the infographic.
-const spiritualData = {
+const spiritualData: SpiritualData = {
     yoruba: {
         name: "Yoruba Ifá/Orisha",
         region: "West Africa",
@@ -62,7 +71,7 @@ const chartColors = {
 
 // -- Reusable Components --
 
-const CoreConceptCard = ({ icon, title, children }) => (
+const CoreConceptCard = ({ icon, title, children }: { icon: string; title: string; children?: React.ReactNode }) => (
     <div className="bg-white p-6 rounded-lg shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
         <div className="text-5xl mb-4 flex justify-center items-center h-16">{icon}</div>
         <h3 className="text-xl font-semibold text-[#005086]">{title}</h3>
@@ -70,13 +79,13 @@ const CoreConceptCard = ({ icon, title, children }) => (
     </div>
 );
 
-const TraditionCard = ({ children, className }) => (
+const TraditionCard = ({ children, className }: { children: React.ReactNode; className?: string }) => (
     <div className={`bg-white p-6 md:p-8 rounded-2xl shadow-2xl flex flex-col ${className}`}>
         {children}
     </div>
 );
 
-const AIGeneratorButton = ({ onClick, isLoading, children }) => (
+const AIGeneratorButton = ({ onClick, isLoading, children }: { onClick: () => void; isLoading: boolean; children?: React.ReactNode }) => (
      <button
         onClick={onClick}
         disabled={isLoading}
@@ -130,7 +139,7 @@ const YorubaRadarChart = () => {
             pointBackgroundColor: chartColors.blue
         }]
     };
-    const options = {
+    const options: ChartOptions<'radar'> = {
         responsive: true,
         maintainAspectRatio: false,
         plugins: { legend: { position: 'top' } },
@@ -189,7 +198,7 @@ const IgboBarChart = () => {
             backgroundColor: [chartColors.purple, chartColors.orange, chartColors.blue, chartColors.yellow],
         }]
     };
-    const options = {
+    const options: ChartOptions<'bar'> = {
         indexAxis: 'y', responsive: true, maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: { x: { grid: { display: false }, ticks: { display: false } }, y: { grid: { display: false } } }
@@ -201,12 +210,16 @@ const IgboBarChart = () => {
 // -- Main Infographic Component --
 
 export default function AfricanSpiritualityInfographic() {
-    const [aiOutputs, setAiOutputs] = useState({});
-    const [loadingStates, setLoadingStates] = useState({});
+    const [aiOutputs, setAiOutputs] = useState<{ [key: string]: string }>({});
+    const [loadingStates, setLoadingStates] = useState<{ [key: string]: boolean }>({});
     
-    const handleAIGenerate = async (traditionKey, type) => {
+    const handleAIGenerate = async (traditionKey: string, type: string) => {
         const uniqueId = `${traditionKey}-${type}`;
-        setLoadingStates(prev => ({ ...prev, [uniqueId]: true }));
+        setLoadingStates(prev => {
+            console.log('typeof prev :>> ', typeof prev);
+            console.log('prev :>> ', prev);
+            return ({ ...prev, [uniqueId]: true })
+    });
 
         const { aiPromptContext } = spiritualData[traditionKey];
         let prompt;
@@ -233,7 +246,11 @@ export default function AfricanSpiritualityInfographic() {
             
             if (result.candidates && result.candidates[0]?.content?.parts[0]?.text) {
                 const text = result.candidates[0].content.parts[0].text;
-                setAiOutputs(prev => ({ ...prev, [uniqueId]: text.trim() }));
+                setAiOutputs(prev => {
+            console.log('typeof prev :>> ', typeof prev);
+            console.log('prev :>> ', prev);
+                    return ({ ...prev, [uniqueId]: text.trim() })
+            });
             } else {
                  setAiOutputs(prev => ({ ...prev, [uniqueId]: "The AI scribe is resting. Please try again later." }));
             }
