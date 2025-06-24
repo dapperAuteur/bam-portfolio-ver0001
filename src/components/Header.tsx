@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Header() {
   return (
-    <header className="bg-gradient-to-r from-primary to-primary-dark text-white p-4 shadow-lg">
+    <header className="bg-gradient-to-r from-primary to-primary-dark text-black p-4 shadow-lg">
       <nav className="container mx-auto flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold hover:text-primary-light transition-colors duration-200">
             DevRel Portfolio

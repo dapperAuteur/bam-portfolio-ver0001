@@ -18,12 +18,12 @@ const config: Config = {
         accent: '#10B981', // Emerald 500
         page: {
           background: '#181a1b', // Dark background
-          text: '#e8e6e3',       // Light primary text
+          text: '#46484d',       // Dark primary text
         },
         card: {
           background: '#51565c', // A bit lighter card background for more contrast
           border: '#3a3e40',     // Subtle border for cards
-          text: '#dcd9d6',       // Light text for cards
+          text: '#46484d',       // Light text for cards
         },
         // General text for descriptions, etc.
         secondaryText: '#a0a3a6', // Dimmer light text for descriptions, etc.
