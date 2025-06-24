@@ -41,9 +41,9 @@ interface ModuleData {
   chartType?: 'line' | 'pie' | 'bar';
 }
 
-interface ECSInfographicProps {
-  className?: string;
-}
+// interface ECSInfographicProps {
+//   className?: string;
+// }
 
 // Sample data for ECS modules based on curriculum
 const ecsModulesData: ModuleData[] = [
@@ -157,7 +157,7 @@ const ecsModulesData: ModuleData[] = [
   }
 ];
 
-export default function ECSInfographic({ className = '' }: ECSInfographicProps) {
+export default function ECSInfographic() {
   const [userType, setUserType] = useState<UserType>('general');
   const [expandedModules, setExpandedModules] = useState<Set<string>>(new Set());
   const [showChat, setShowChat] = useState(false);
@@ -317,7 +317,7 @@ Respond appropriately for a ${userType} audience with accurate, evidence-based i
   };
 
   return (
-    <div className={`max-w-6xl mx-auto p-6 bg-white ${className}`}>
+    <div className="max-w-6xl mx-auto p-6 bg-white">
       {/* Header */}
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-gray-800 mb-4">
