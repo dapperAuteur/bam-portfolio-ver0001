@@ -184,7 +184,7 @@ const App = () => {
         {!loading && !error && !infographicData && (
           <div className="mt-8 p-6 text-center text-gray-500 bg-gray-50 rounded-xl border border-gray-200 shadow-sm">
             <Sparkles className="mx-auto mb-4 text-blue-400" size={48} />
-            <p className="text-lg">Enter a topic above and click "Generate Infographic" to see the magic happen!</p>
+            <p className="text-lg">Enter a topic above and click &quot;Generate Infographic&quot; to see the magic happen!</p>
           </div>
         )}
       </div>
