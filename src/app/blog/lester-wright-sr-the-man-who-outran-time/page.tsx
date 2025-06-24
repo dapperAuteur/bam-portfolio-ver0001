@@ -39,19 +39,37 @@ Lester Wright Sr.'s life is a rich tapestry... a decorated World War II veteran,
 `;
 
 
-const InfoCard = ({ icon, title, content, color }: { icon: any, title: string, content: string, color: string }) => {
-    const Icon = icon;
+// const InfoCard = ({ icon, title, content, color }: { icon: any, title: string, content: string, color: string }) => {
+//     const Icon = icon;
     
-    // Mappings for Tailwind CSS JIT compiler to ensure classes are detected
-    const colorStyles = {
-        yellow: { bg: 'bg-yellow-100', text: 'text-yellow-600' },
-        blue: { bg: 'bg-blue-100', text: 'text-blue-600' },
-        red: { bg: 'bg-red-100', text: 'text-red-600' },
-        green: { bg: 'bg-green-100', text: 'text-green-600' },
-        purple: { bg: 'bg-purple-100', text: 'text-purple-600' },
-        indigo: { bg: 'bg-indigo-100', text: 'text-indigo-600' },
-    };
+//     // Mappings for Tailwind CSS JIT compiler to ensure classes are detected
+//     const colorStyles = {
+//         yellow: { bg: 'bg-yellow-100', text: 'text-yellow-600' },
+//         blue: { bg: 'bg-blue-100', text: 'text-blue-600' },
+//         red: { bg: 'bg-red-100', text: 'text-red-600' },
+//         green: { bg: 'bg-green-100', text: 'text-green-600' },
+//         purple: { bg: 'bg-purple-100', text: 'text-purple-600' },
+//         indigo: { bg: 'bg-indigo-100', text: 'text-indigo-600' },
+//     };
 
+const colorStyles = {
+    yellow: { bg: 'bg-yellow-100', text: 'text-yellow-600' },
+    blue: { bg: 'bg-blue-100', text: 'text-blue-600' },
+    red: { bg: 'bg-red-100', text: 'text-red-600' },
+    green: { bg: 'bg-green-100', text: 'text-green-600' },
+    purple: { bg: 'bg-purple-100', text: 'text-purple-600' },
+    indigo: { bg: 'bg-indigo-100', text: 'text-indigo-600' },
+};
+type ColorKey = keyof typeof colorStyles;
+
+interface InfoCardProps {
+    icon: React.ElementType;
+    title: string;
+    content: string;
+    color: ColorKey;
+}
+
+const InfoCard = ({ icon: Icon, title, content, color }: InfoCardProps) => {
     // Fallback to gray if color prop is invalid
     const styles = colorStyles[color] || { bg: 'bg-gray-100', text: 'text-gray-600' };
 
