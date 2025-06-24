@@ -10,6 +10,20 @@ export default function BlogPage() {
 
       <div className="mt-12 space-y-8">
         <article className="bg-card-background rounded-xl shadow-lg p-6 border border-card-border">
+          <Link href="/blog/centenarian-athletes-an-interactive-infographic"> {/* Link to the new page */}
+            <h2 className="text-2xl font-semibold text-card-text hover:text-primary transition-colors duration-200">
+              Ageless Wonders: Discover the incredible stories of centenarian athletes who defy the limits of age.
+            </h2>
+          </Link>
+          <p className="text-secondaryText text-sm mt-1">June 17, 2025 | Categories: <span className="inline-block bg-primary-light text-primary text-xs font-medium px-2 py-0.5 rounded-full">Health Tech</span> <span className="inline-block bg-accent text-white text-xs font-medium px-2 py-0.5 rounded-full">AI</span> <span className="inline-block bg-secondaryText text-white text-xs font-medium px-2 py-0.5 rounded-full">Infographic</span></p>
+          <p className="text-card-text mt-4">
+            Ever wondered what it takes to challenge father time?
+          </p>
+          <Link href="/blog/centenarian-athletes-an-interactive-infographic" className="mt-4 inline-block text-primary hover:text-primary-dark font-medium transition-colors duration-200">
+              Read More &rarr;
+          </Link>
+        </article>
+        <article className="bg-card-background rounded-xl shadow-lg p-6 border border-card-border">
           <Link href="/blog/lester-wright-sr-the-man-who-outran-time"> {/* Link to the new page */}
             <h2 className="text-2xl font-semibold text-card-text hover:text-primary transition-colors duration-200">
               Lester Wright Sr.: The Man Who Outran Time
