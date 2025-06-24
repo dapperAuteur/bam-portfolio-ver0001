@@ -157,7 +157,7 @@ const ecsModulesData: ModuleData[] = [
   }
 ];
 
-const ECSInfographic: React.FC<ECSInfographicProps> = ({ className = '' }) => {
+export default function ECSInfographic({ className = '' }: ECSInfographicProps) {
   const [userType, setUserType] = useState<UserType>('general');
   const [expandedModules, setExpandedModules] = useState<Set<string>>(new Set());
   const [showChat, setShowChat] = useState(false);
@@ -474,4 +474,4 @@ Respond appropriately for a ${userType} audience with accurate, evidence-based i
   );
 };
 
-export default ECSInfographic;
+// export default ECSInfographic;
