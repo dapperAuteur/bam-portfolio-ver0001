@@ -10,6 +10,20 @@ export default function BlogPage() {
 
       <div className="mt-12 space-y-8">
         <article className="bg-card-background rounded-xl shadow-lg p-6 border border-card-border">
+          <Link href="/blog/secret-life-of-the-fishers-cottontail"> {/* Link to the new page */}
+            <h2 className="text-2xl font-semibold text-card-text hover:text-primary transition-colors duration-200">
+              The Secret Life of the Fishers Cottontail
+            </h2>
+          </Link>
+          <p className="text-secondaryText text-sm mt-1">June 17, 2025 | Categories: <span className="inline-block bg-primary-light text-primary text-xs font-medium px-2 py-0.5 rounded-full">Health Tech</span> <span className="inline-block bg-accent text-white text-xs font-medium px-2 py-0.5 rounded-full">AI</span> <span className="inline-block bg-secondaryText text-white text-xs font-medium px-2 py-0.5 rounded-full">Infographic</span></p>
+          <p className="text-card-text mt-4">
+            The Suburban Cottontail: Unseen dramas, surprising behaviors, and complex survival strategies unfold every day in the backyards of Fishers, Indiana.
+          </p>
+          <Link href="/blog/secret-life-of-the-fishers-cottontail" className="mt-4 inline-block text-primary hover:text-primary-dark font-medium transition-colors duration-200">
+              Read More &rarr;
+          </Link>
+        </article>
+        <article className="bg-card-background rounded-xl shadow-lg p-6 border border-card-border">
           <Link href="/blog/endocannabinoid-system-curriculum-infographic"> {/* Link to the new page */}
             <h2 className="text-2xl font-semibold text-card-text hover:text-primary transition-colors duration-200">
               Endocannabinoid System: More than the Runner&apos;s High
