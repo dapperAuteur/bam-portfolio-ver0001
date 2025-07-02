@@ -2,31 +2,50 @@
 import React, { useState } from 'react';
 
 // --- SVG Icon Components for a Clean UI ---
-const TrophyIcon = ({ className }) => (
+const TrophyIcon = ({ className }) => {
+  console.log('typeof className :>> ', typeof className);
+  console.log('className :>> ', className);
+  return(
   <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="currentColor">
     <path d="M18.5 2h-13A2.5 2.5 0 003 4.5V9c0 4.42 3.58 8 8 8s8-3.58 8-8V4.5A2.5 2.5 0 0018.5 2zM11 15c-2.76 0-5-2.24-5-5h10c0 2.76-2.24 5-5 5zM11 18h2v3h-2zM10 21h4v2h-4z" />
   </svg>
-);
-const CalendarIcon = ({ className }) => (
+)};
+const CalendarIcon = ({ className }) => {
+  console.log('typeof className :>> ', typeof className);
+  console.log('className :>> ', className);
+
+;
+
+
+  return (
   <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="currentColor">
     <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 002 2h14a2 2 0 002-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z" />
   </svg>
-);
-const LocationIcon = ({ className }) => (
+)};
+const LocationIcon = ({ className }) => {
+  console.log('typeof className :>> ', typeof className);
+  console.log('className :>> ', className);
+  return (
   <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="currentColor">
     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z" />
   </svg>
-);
-const FlagIcon = ({ className }) => (
+)};
+const FlagIcon = ({ className }) => {
+  console.log('typeof className :>> ', typeof className);
+  console.log('className :>> ', className)
+  return (
   <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="currentColor">
     <path d="M14.4 6L14 4H5v17h2v-7h5.6l.4 2h7V6z" />
   </svg>
-);
-const SparklesIcon = ({ className }) => (
+)};
+const SparklesIcon = ({ className }) => {
+  console.log('typeof className :>> ', typeof className);
+  console.log('className :>> ', className);
+  return (
     <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 2l2.37 6.94h7.26l-5.88 4.28 2.24 6.88-5.99-4.34-5.99 4.34 2.24-6.88-5.88-4.28h7.26L12 2z" />
     </svg>
-);
+)};
 
 // --- Athlete Data extracted from the document ---
 const athletes = [
@@ -88,11 +107,13 @@ const athletes = [
 
 // --- Gemini API Call Function ---
 async function generateInsight(athlete) {
+  console.log('typeof athlete :>> ', typeof athlete);
+  console.log('athlete :>> ', athlete);
   const prompt = `Based on the inspiring story of ${athlete.name}, a centenarian athlete known for achieving ${athlete.achievement} and whose life involved these facts: "${athlete.facts}", generate a short, one-sentence motivational fitness insight. Make it powerful and concise.`;
   
   // In a real Next.js app, this logic would typically be in an API route.
   // For this self-contained component, we'll make the call directly.
-  let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+  const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
   const payload = { contents: chatHistory };
   const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
   const apiKey = GEMINI_API_KEY; // The environment will provide the API key
@@ -126,6 +147,8 @@ async function generateInsight(athlete) {
 
 // --- Athlete Card Component ---
 const AthleteCard = ({ athlete }) => {
+  console.log('typeof athlete :>> ', typeof athlete);
+  console.log('athlete :>> ', athlete);
   const [insight, setInsight] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -159,7 +182,7 @@ const AthleteCard = ({ athlete }) => {
         <div className="mt-6 pt-5 border-t border-slate-200">
           {insight ? (
             <div className="p-4 bg-indigo-50 rounded-lg text-center animate-fade-in">
-              <p className="text-indigo-800 font-medium italic">"{insight}"</p>
+              <p className="text-indigo-800 font-medium italic">&quot;{insight}&quot;</p>
             </div>
           ) : (
             <button
@@ -198,7 +221,7 @@ export default function App() {
             </span>
           </h1>
           <p className="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">
-            An interactive look at the world's most inspiring centenarian athletes who redefine the limits of age.
+            An interactive look at the world&apos;s most inspiring centenarian athletes who redefine the limits of age.
           </p>
         </header>
 
